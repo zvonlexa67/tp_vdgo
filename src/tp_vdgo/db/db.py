@@ -165,66 +165,66 @@ def conn_parms(host, port, dbname, user, password):
         port={port}
     """
 
-def createusers():
-    if testdb("template1"):
-        dbP = db()
-        dbP.dbname = "template1"
-        settings = dbP.settings
+# def createusers():
+#     if testdb("template1"):
+#         dbP = db()
+#         dbP.dbname = "template1"
+#         settings = dbP.settings
     
-        with dbP.cursor() as cur:
-            for u in settings.users:
-                match u.puser:
-                    case "super_vdgo":
-                        cur.execute(f"""
-                            CREATE ROLE {u.puser} WITH
-                                LOGIN
-                                NOSUPERUSER
-                                INHERIT
-                                CREATEDB
-                                NOCREATEROLE
-                                NOREPLICATION
-                                NOBYPASSRLS
-                                PASSWORD '{u.passwd}';
-                        """)
-                    case _:
-                        cur.execute(f"""
-                            CREATE ROLE {u.puser} WITH
-                                LOGIN
-                                NOSUPERUSER
-                                INHERIT
-                                NOCREATEDB
-                                NOCREATEROLE
-                                NOREPLICATION
-                                NOBYPASSRLS
-                                PASSWORD '{u.passwd}';
-                        """)
+#         with dbP.cursor() as cur:
+#             for u in settings.users:
+#                 match u.puser:
+#                     case "super_vdgo":
+#                         cur.execute(f"""
+#                             CREATE ROLE {u.puser} WITH
+#                                 LOGIN
+#                                 NOSUPERUSER
+#                                 INHERIT
+#                                 CREATEDB
+#                                 NOCREATEROLE
+#                                 NOREPLICATION
+#                                 NOBYPASSRLS
+#                                 PASSWORD '{u.passwd}';
+#                         """)
+#                     case _:
+#                         cur.execute(f"""
+#                             CREATE ROLE {u.puser} WITH
+#                                 LOGIN
+#                                 NOSUPERUSER
+#                                 INHERIT
+#                                 NOCREATEDB
+#                                 NOCREATEROLE
+#                                 NOREPLICATION
+#                                 NOBYPASSRLS
+#                                 PASSWORD '{u.passwd}';
+#                         """)
 
-def dropusers():
-    if testdb("template1"):
-        dbP = db()
-        dbP.dbname = "template1"
-        settings = dbP.settings
-        with dbP.cursor() as cur:
-            for u in settings.users:
-                cur.execute(f"DROP USER IF EXISTS {u.puser};")
+# def dropusers():
+#     if testdb("template1"):
+#         dbP = db()
+#         dbP.dbname = "template1"
+#         settings = dbP.settings
+#         with dbP.cursor() as cur:
+#             for u in settings.users:
+#                 cur.execute(f"DROP USER IF EXISTS {u.puser};")
 
-def createdb():
-    if not testdb(exp=False) and testdb("template1"):
-        dbP = db()
-        settings = dbP.settings
-        dbP.dbname = "template1"
-        dbP.user = settings.super_vdgo.puser
-        dbP.passwd = settings.super_vdgo.passwd
+# def createdb():
+#     if not testdb(exp=False) and testdb("template1"):
+#         dbP = db()
+#         settings = dbP.settings
+#         dbP.dbname = "template1"
+#         dbP.user = settings.super_vdgo.puser
+#         dbP.passwd = settings.super_vdgo.passwd
 
-        with dbP.cursor(autocommit=True) as cur:
-            cur.execute(f"CREATE DATABASE {settings.db_name};")
+#         with dbP.cursor(autocommit=True) as cur:
+#             cur.execute(f"CREATE DATABASE {settings.db_name};")
 
-def dropdb():
-    if testdb("template1"):
-        dbP = db()
-        dbP.dbname = "template1"
-        with dbP.cursor(autocommit=True) as cur:
-            cur.execute(f"DROP DATABASE {dbP.settings.db_name};")
+# def dropdb():
+#     if testdb("template1"):
+#         dbP = db()
+#         dbP.dbname = "template1"
+#         with dbP.cursor(autocommit=True) as cur:
+#             cur.execute(f"DROP DATABASE {dbP.settings.db_name};")
 
 def testdb(dbname=None, exp=True):
     if dbname:

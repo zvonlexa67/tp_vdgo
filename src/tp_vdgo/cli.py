@@ -2,7 +2,8 @@ import typer
 from .config import Settings
 
 from .kladr.kladr import kladr
-from .db.db import createdb as create_db, createusers as create_users, dropdb as db_dropdb, dropusers as drop_users
+
+from .db import dropdb as db_dropdb, createdb as create_db, dropusers as drop_users, createusers as create_users
 
 app = typer.Typer(help="Управление списком задач")
 
@@ -21,7 +22,7 @@ def kldr():
         raise typer.Exit(code=1)
     
 @app.command()
-def initdb():
+def createdb():
     try:
         createdb()
     except RuntimeError as e:
