@@ -1,0 +1,17 @@
+[project]
+name="tp_vdgo"
+version="0.1.0"
+description="ТП ВДГО"
+requires-python=">=3.11"
+
+dependencies=[
+    "typer[all]",
+    "pydantic-settings",
+    "psycopg[binary]"
+]
+
+[project.scripts]
+tp_vdgo="tp_vdgo.cli:app"
+
+[tool.pytest.ini_options]
+pythonpath=["src"]

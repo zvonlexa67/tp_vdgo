@@ -1,0 +1,3 @@
+typer[all]
+pydantic-settings
+psycopg[binary]
