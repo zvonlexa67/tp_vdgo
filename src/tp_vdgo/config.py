@@ -18,11 +18,11 @@ class Settings(BaseSettings):
 
     db_path_kladr: str = ""
 
-    super_vdgo: PUser = Field(default_factory=lambda: PUser(puser="super_vdgo", passwd="dyOM+Xv#f51!HaTyXqCLkP+&Y%21(XUs6lULg1$#6NAYDt6%iS"))
-    admin_vdgo: PUser = Field(default_factory=lambda: PUser(puser="admin_vdgo", passwd="#Z4eeAtMAIORYt9#8tDX0i*+K8z8Tbw81DoWOFL+^7Y*RF^iJO"))
+    super_vdgo: PUser = Field(default_factory=lambda: PUser(puser="super_vdgo", passwd="dyOM!Xv*f51!HaTyXqCLkP*eY821*XUs6lULg1$*6NAYDt6MtS"))
+    admin_vdgo: PUser = Field(default_factory=lambda: PUser(puser="admin_vdgo", passwd="!Z4eeAtMAIORYt9!8tDX0i*!K8z8Tbw81DoWOFL]^7Y*RF^iJO"))
     user_vdgo: PUser = Field(default_factory=lambda: PUser(puser="user_vdgo", passwd="i7oVuPlgsSqr0EDxJSc0^Vz8UEfhq_nEIaxPbACFLjRXgjvGfa"))
-    guest_vdgo: PUser = Field(default_factory=lambda: PUser(puser="guest_vdgo", passwd="y5Xq46iu^PQuoEsJftZ^o5aS27KO@sU48BZPmnGOxeN5ouj%DM"))
-    other_vdgo: PUser = Field(default_factory=lambda: PUser(puser="other_vdgo", passwd="ZV)qhvr6j#!lzGdA0^)KkCeYHT7^N9!5AsTd!QWmCStu%eFsk$"))
+    guest_vdgo: PUser = Field(default_factory=lambda: PUser(puser="guest_vdgo", passwd="y5Xq46iu^PQuoEsJftZ^o5aS27KO@sU48BZPmnGOxeN5oujEDM"))
+    other_vdgo: PUser = Field(default_factory=lambda: PUser(puser="other_vdgo", passwd="ZV)qhvr6j!!lzGdA0^)KkCeYHT7^N9!5AsTd!QWmCStuSeFsk$"))
 
     @property
     def users(self) -> List[PUser]:

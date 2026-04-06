@@ -2,7 +2,7 @@
 
 ## Установка
 ```bash
-1. tp_vdgo createuser
+1. tp_vdgo createusers
 2. tp_vdgo createdb
 ```
 
