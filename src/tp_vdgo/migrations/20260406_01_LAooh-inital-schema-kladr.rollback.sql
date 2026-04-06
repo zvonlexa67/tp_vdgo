@@ -1,0 +1,16 @@
+-- Inital schema KLADR
+-- depends: 
+
+DROP TABLE IF EXISTS altnames;
+
+DROP TABLE IF EXISTS doma;
+
+DROP TABLE IF EXISTS kladr;
+
+DROP TABLE IF EXISTS street;
+
+DROP TABLE IF EXISTS socrbase;
+
+DROP TABLE IF EXISTS flat;
+
+DROP TABLE IF EXISTS namemap;
