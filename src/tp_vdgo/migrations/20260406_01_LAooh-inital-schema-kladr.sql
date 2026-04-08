@@ -2,7 +2,7 @@
 -- depends: 
 
 CREATE TABLE IF NOT EXISTS altnames (
-    oldcode CHAR(19) NOT NULL UNIQUE,
+    oldcode CHAR(19) NOT NULL,
     newcode CHAR(19) NOT NULL,
     level CHAR(1) NOT NULL
 );
