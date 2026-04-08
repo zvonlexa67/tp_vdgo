@@ -1,7 +1,7 @@
 import typer
 from .config import Settings
 
-from .kladr.kladr import kladr
+from .kladr import loadDBF
 
 from .db import dropdb as db_dropdb, createdb as create_db, dropusers as drop_users, createusers as create_users
 
@@ -12,14 +12,20 @@ def run():
     typer.echo("Запускаем основную программу")
 
 @app.command()
-def kldr():
-    try:
-        k = kladr()
-        typer.echo(type(k))
-        typer.echo(k.loadDBF())
-    except RuntimeError as e:
-        typer.echo(f"Ошибка: {e}", err=True)
-        raise typer.Exit(code=1)
+def kladr():
+    print("loadDBF()")
+    loadDBF()
+    
+
+# @app.command()
+# def kldr():
+#     try:
+#         k = kladr()
+#         typer.echo(type(k))
+#         typer.echo(k.loadDBF())
+#     except RuntimeError as e:
+#         typer.echo(f"Ошибка: {e}", err=True)
+#         raise typer.Exit(code=1)
     
 @app.command()
 def createdb():

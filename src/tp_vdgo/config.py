@@ -6,6 +6,9 @@ class PUser(BaseModel):
     puser: str
     passwd: str
 
+class NameKladrDBF(BaseModel):
+    path: str
+
 class Settings(BaseSettings):
     model_config = {"env_file": ".env.example", "extra": "ignore"}
 
@@ -16,7 +19,16 @@ class Settings(BaseSettings):
     db_user: str = "admin"
     db_pass: str = "admin123poi"
 
-    db_path_kladr: str = ""
+    path_kladr: str = "kladr"
+
+    altnames: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="ALTNAMES.DBF"))
+    doma: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="DOMA.DBF"))
+    flat: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="FLAT.DBF"))
+    kladr: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="KLADR.DBF"))
+    namemap: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="NAMEMAP.DBF"))
+    socrbase: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="SOCRBASE.DBF"))
+    street: NameKladrDBF = Field(default_factory=lambda: NameKladrDBF(path="STREET.DBF"))
+    
 
     super_vdgo: PUser = Field(default_factory=lambda: PUser(puser="super_vdgo", passwd="dyOM!Xv*f51!HaTyXqCLkP*eY821*XUs6lULg1$*6NAYDt6MtS"))
     admin_vdgo: PUser = Field(default_factory=lambda: PUser(puser="admin_vdgo", passwd="!Z4eeAtMAIORYt9!8tDX0i*!K8z8Tbw81DoWOFL]^7Y*RF^iJO"))
