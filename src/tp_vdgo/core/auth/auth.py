@@ -1,5 +1,5 @@
 from ..db import db
-from ..models import Role, User
+from ...models import Role, User
 
 
 class BaseAuth():

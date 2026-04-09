@@ -2,7 +2,7 @@ import sys
 import psycopg
 from contextlib import contextmanager, suppress
 
-from ..config import Settings
+from ...config import Settings
 
 class _cursor_wrapper():
     """Пробрасывает execute-вызовы, сохраняя последний запрос в db-объекте."""

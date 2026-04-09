@@ -6,11 +6,11 @@
 import pytest
 from unittest.mock import MagicMock, patch, call
 
-from tp_vdgo.db.createuser import createusers
-from tp_vdgo.db.dropusers import dropusers
-from tp_vdgo.db.createdb import createdb
-from tp_vdgo.db.dropdb import dropdb
-from tp_vdgo.auth.auth import Auth
+from tp_vdgo.core.db.createuser import createusers
+from tp_vdgo.core.db.dropusers import dropusers
+from tp_vdgo.core.db.createdb import createdb
+from tp_vdgo.core.db.dropdb import dropdb
+from tp_vdgo.core.auth.auth import Auth
 from tp_vdgo.models.auth.role import Role
 from tp_vdgo.models.auth.user import User
 
@@ -18,8 +18,8 @@ from tp_vdgo.models.auth.user import User
 class TestCreateUsers:
     """Тесты для функции createusers."""
 
-    @patch("tp_vdgo.db.createuser.testdb")
-    @patch("tp_vdgo.db.createuser.db")
+    @patch("tp_vdgo.core.db.createuser.testdb")
+    @patch("tp_vdgo.core.db.createuser.db")
     def test_createusers_creates_all_roles(self, mock_db_cls, mock_testdb):
         """Проверка, что createusers создает все 5 ролей."""
         mock_testdb.return_value = True
@@ -43,7 +43,7 @@ class TestCreateUsers:
         mock_testdb.assert_called_with("template1")
         assert mock_db.dbname == "template1"
 
-    @patch("tp_vdgo.db.createuser.testdb")
+    @patch("tp_vdgo.core.db.createuser.testdb")
     def test_createusers_skips_if_testdb_false(self, mock_testdb):
         """Проверка, что createusers не выполняется, если testdb возвращает False."""
         mock_testdb.return_value = False
@@ -56,8 +56,8 @@ class TestCreateUsers:
 class TestDropUsers:
     """Тесты для функции dropusers."""
 
-    @patch("tp_vdgo.db.dropusers.testdb")
-    @patch("tp_vdgo.db.dropusers.db")
+    @patch("tp_vdgo.core.db.dropusers.testdb")
+    @patch("tp_vdgo.core.db.dropusers.db")
     def test_dropusers_drops_all_roles(self, mock_db_cls, mock_testdb):
         """Проверка, что dropusers удаляет все 5 ролей."""
         mock_testdb.return_value = True
@@ -78,7 +78,7 @@ class TestDropUsers:
         assert "DROP USER IF EXISTS super_vdgo" in mock_cursor.execute.call_args_list[0][0][0]
         assert "DROP USER IF EXISTS admin_vdgo" in mock_cursor.execute.call_args_list[1][0][0]
 
-    @patch("tp_vdgo.db.dropusers.testdb")
+    @patch("tp_vdgo.core.db.dropusers.testdb")
     def test_dropusers_skips_if_testdb_false(self, mock_testdb):
         """Проверка, что dropusers не выполняется, если testdb возвращает False."""
         mock_testdb.return_value = False
@@ -91,8 +91,8 @@ class TestDropUsers:
 class TestCreateDB:
     """Тесты для функции createdb."""
 
-    @patch("tp_vdgo.db.createdb.testdb")
-    @patch("tp_vdgo.db.createdb.db")
+    @patch("tp_vdgo.core.db.createdb.testdb")
+    @patch("tp_vdgo.core.db.createdb.db")
     def test_createdb_creates_database(self, mock_db_cls, mock_testdb):
         """Проверка, что createdb создает БД."""
         mock_testdb.side_effect = lambda dbname=None, exp=True: dbname == "template1"
@@ -110,7 +110,7 @@ class TestCreateDB:
         mock_db.cursor.assert_called_once_with(autocommit=True)
         mock_cursor.execute.assert_called_once_with("CREATE DATABASE tp_vdgo_test;")
 
-    @patch("tp_vdgo.db.createdb.testdb")
+    @patch("tp_vdgo.core.db.createdb.testdb")
     def test_createdb_skips_if_db_exists(self, mock_testdb):
         """Проверка, что createdb не выполняется, если БД уже существует."""
         mock_testdb.return_value = True  # БД уже существует
@@ -124,8 +124,8 @@ class TestCreateDB:
 class TestDropDB:
     """Тесты для функции dropdb."""
 
-    @patch("tp_vdgo.db.dropdb.testdb")
-    @patch("tp_vdgo.db.dropdb.db")
+    @patch("tp_vdgo.core.db.dropdb.testdb")
+    @patch("tp_vdgo.core.db.dropdb.db")
     def test_dropdb_drops_database(self, mock_db_cls, mock_testdb):
         """Проверка, что dropdb удаляет БД."""
         mock_testdb.return_value = True
@@ -141,7 +141,7 @@ class TestDropDB:
 
         mock_cursor.execute.assert_called_once_with("DROP DATABASE tp_vdgo_test;")
 
-    @patch("tp_vdgo.db.dropdb.testdb")
+    @patch("tp_vdgo.core.db.dropdb.testdb")
     def test_dropdb_skips_if_testdb_false(self, mock_testdb):
         """Проверка, что dropdb не выполняется, если testdb возвращает False."""
         mock_testdb.return_value = False
@@ -154,7 +154,7 @@ class TestDropDB:
 class TestAuthCreate:
     """Тесты для класса Auth (create)."""
 
-    @patch("tp_vdgo.auth.auth.db")
+    @patch("tp_vdgo.core.auth.auth.db")
     def test_auth_create_executes_ddl(self, mock_db_cls):
         """Проверка, что Auth.create() выполняет DDL для Role и User."""
         mock_db = MagicMock()
@@ -181,7 +181,7 @@ class TestAuthCreate:
 class TestAuthDrop:
     """Тесты для класса Auth (drop)."""
 
-    @patch("tp_vdgo.auth.auth.db")
+    @patch("tp_vdgo.core.auth.auth.db")
     def test_auth_drop_executes_ddl(self, mock_db_cls):
         """Проверка, что Auth.drop() выполняет DROP для User и Role."""
         mock_db = MagicMock()
@@ -208,10 +208,10 @@ class TestAuthDrop:
 class TestDbClass:
     """Тесты для класса db."""
 
-    @patch("tp_vdgo.db.db.Settings")
+    @patch("tp_vdgo.core.db.db.Settings")
     def test_db_initializes_with_default_settings(self, mock_settings_cls):
         """Проверка инициализации db с настройками по умолчанию."""
-        from tp_vdgo.db.db import db
+        from tp_vdgo.core.db.db import db
 
         mock_settings = MagicMock()
         mock_settings.db_host = "localhost"
@@ -230,10 +230,10 @@ class TestDbClass:
         assert db_instance.user == "admin"
         assert db_instance.passwd == "password"
 
-    @patch("tp_vdgo.db.db.Settings")
+    @patch("tp_vdgo.core.db.db.Settings")
     def test_db_host_setter_updates_conn_params(self, mock_settings_cls):
         """Проверка, что сеттер host обновляет conn_params."""
-        from tp_vdgo.db.db import db
+        from tp_vdgo.core.db.db import db
 
         mock_settings = MagicMock()
         mock_settings.db_host = "localhost"
@@ -248,10 +248,10 @@ class TestDbClass:
 
         assert db_instance.host == "newhost"
 
-    @patch("tp_vdgo.db.db.Settings")
+    @patch("tp_vdgo.core.db.db.Settings")
     def test_db_params_returns_string(self, mock_settings_cls):
         """Проверка, что params возвращает строку подключения."""
-        from tp_vdgo.db.db import db
+        from tp_vdgo.core.db.db import db
 
         mock_settings = MagicMock()
         mock_settings.db_host = "localhost"

@@ -1,9 +1,9 @@
 import typer
 
 from .config import Settings
-from .kladr import create as ck, drop as dk, truncate as tk, load as lk
-from .db import dropdb as ddb, createdb as cdb, dropusers as ddu, createusers as cdu
-from .auth import create as ca, drop as da
+from .core.kladr import create as ck, drop as dk, truncate as tk, load as lk
+from .core.db import dropdb as ddb, createdb as cdb, dropusers as ddu, createusers as cdu
+from .core.auth import create as ca, drop as da
 
 app = typer.Typer(help="Управление списком задач")
 
