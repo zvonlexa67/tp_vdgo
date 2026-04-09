@@ -1,3 +1,5 @@
 -- Auth Role Profile
 -- depends: 20260406_01_LAooh-inital-schema-kladr
-aaaa
+
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
