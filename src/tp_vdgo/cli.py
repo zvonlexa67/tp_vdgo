@@ -3,6 +3,7 @@ import typer
 from .config import Settings
 from .kladr import create as ck, drop as dk, truncate as tk, load as lk
 from .db import dropdb as ddb, createdb as cdb, dropusers as ddu, createusers as cdu
+from .auth import create as ca, drop as da
 
 app = typer.Typer(help="Управление списком задач")
 
@@ -35,6 +36,16 @@ def db(createusers: bool = False, createdb: bool = False, dropdb: bool = False, 
             ddb()
         if dropusers:
             ddu()
+    except RuntimeError as e:
+        typer.Exit(typer.echo(e, err=True))
+
+@app.command()
+def auth(drop: bool = False, create: bool = False):
+    try:
+        if drop:
+            da()
+        if create:
+            ca()
     except RuntimeError as e:
         typer.Exit(typer.echo(e, err=True))
 
