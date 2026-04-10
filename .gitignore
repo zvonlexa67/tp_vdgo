@@ -34,7 +34,7 @@ ENV/
 *.sqlite3
 
 # KLADR data files (binary DBF files)
-kladr/
+kladrdbf/
 
 # OS
 .DS_Store
