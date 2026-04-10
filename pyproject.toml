@@ -10,6 +10,7 @@ dependencies=[
     "psycopg[binary]",
     "asyncpg",
     "dbfread2",
+    "pyside6",
 ]
 
 [project.optional-dependencies]

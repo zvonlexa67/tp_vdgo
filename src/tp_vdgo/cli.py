@@ -10,6 +10,8 @@ app = typer.Typer(help="Управление списком задач")
 @app.command()
 def run():
     typer.echo("Запускаем основную программу")
+    from tp_vdgo.gui.main import run
+    typer.Exit(run())
 
 @app.command()
 def kladr(create: bool = False, drop: bool = False, truncate: bool = False, load: bool = False):
