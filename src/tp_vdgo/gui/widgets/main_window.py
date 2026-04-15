@@ -1,37 +1,53 @@
-from PySide6.QtWidgets import QMainWindow
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile
-from pathlib import Path
+from PySide6.QtWidgets import QMainWindow, QDialog, QWidget, QStackedWidget
+
+from tp_vdgo.gui.views.main_window_ui import Ui_MainWindow
+from tp_vdgo.gui.views.radio_window_ui import Ui_Form
+from tp_vdgo.gui.views.dialog_window_ui import Ui_Dialog
 
 
-class MainWindow(QMainWindow):
+class DialogWindow(QDialog, Ui_Dialog):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
+
+
+class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
 
-        self._load_ui()
+        self.setupUi(self)
+
+        # Сохраняем главный виджет ДО замены на QStackedWidget
+        self._main_widget = self.centralwidget
+        self._main_widget.setParent(None)
+
+        self._stack = QStackedWidget()
+        self.setCentralWidget(self._stack)
+        self._stack.addWidget(self._main_widget)
+
+        self._radio_widget = QWidget()
+        self._radio_ui = Ui_Form()
+        self._radio_ui.setupUi(self._radio_widget)
+        self._stack.addWidget(self._radio_widget)
+
+        self._dialog = DialogWindow(self)
+
         self._connect_signals()
 
-    def _load_ui(self):
-        ui_path = (
-            Path(__file__).parent.parent
-            / "views"
-            / "main_window.ui"
-        )
-
-        loader = QUiLoader()
-        ui_file = QFile(str(ui_path))
-        ui_file.open(QFile.ReadOnly)
-
-        self.ui = loader.load(ui_file, self)
-        ui_file.close()
-
-        self.setCentralWidget(self.ui)
-
     def _connect_signals(self):
-        # пример подключения кнопки
-        if hasattr(self.ui, "pushButton"):
-            self.ui.pushButton.clicked.connect(self.on_click)
+        self.pushButton.clicked.connect(self.on_click)
+        self.DialogButton.clicked.connect(self.on_dialog_click)
+        self._radio_ui.pushButton.clicked.connect(self.on_return_click)
 
     def on_click(self):
-        print("Button clicked")
+        self.pushButton.setEnabled(False)
+        self._stack.setCurrentWidget(self._radio_widget)
+
+    def on_dialog_click(self):
+        self._dialog.exec()
+
+    def on_return_click(self):
+        self._stack.setCurrentWidget(self._main_widget)
+        self.pushButton.setEnabled(True)
